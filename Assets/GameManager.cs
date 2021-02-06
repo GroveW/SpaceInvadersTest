@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
         float boardHeight = 1.0f - buttonsAndTextAreaRatio;
 
-        board.transform.localScale = new Vector3(4.5f, height * boardHeight, board.transform.localScale.z);
+        board.transform.localScale = new Vector3(4.7f, height * boardHeight, board.transform.localScale.z);
     }
 
     void Update()

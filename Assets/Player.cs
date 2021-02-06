@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject bullet;
 
+    [SerializeField]
     private float bulletSpeed = 2.0f;
 
     void Start()
