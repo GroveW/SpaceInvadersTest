@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,36 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private RectTransform txtRect;
+
+    private static GameManager instance;
+
+    public static GameManager Instance { 
+        get
+        { 
+            if (!instance) 
+                instance = FindObjectOfType<GameManager>(); 
+            
+            return instance; 
+        } 
+        
+        set => instance = value; 
+    }
+
+    [SerializeField]
+    private Text scoreText;
+
+    private int score;
+
+    private int Score
+    {
+        get => score;
+
+        set
+        {
+            score = value;
+            scoreText.text = "Points: " + score;
+        }
+    }
 
     void Start()
     {
@@ -25,8 +56,8 @@ public class GameManager : MonoBehaviour
         board.transform.localScale = new Vector3(4.7f, height * boardHeight, board.transform.localScale.z);
     }
 
-    void Update()
+    public void AddPoint()
     {
-        
+        Score += 1;
     }
 }

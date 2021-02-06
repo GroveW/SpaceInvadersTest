@@ -548,6 +548,7 @@ MonoBehaviour:
   board: {fileID: 1421813379}
   btnRect: {fileID: 1390549066}
   txtRect: {fileID: 320935090}
+  scoreText: {fileID: 320935091}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
