@@ -707,7 +707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 636cacec486e43b4c8f52b48817e92f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveStep: 0.1
+  moveStep: 0.2
   moveInterval: 1
   enemiesColumns: 8
   enemiesRows: 4

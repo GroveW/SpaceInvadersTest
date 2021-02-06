@@ -56,6 +56,10 @@ public class EnemiesSwarm : MonoBehaviour
     {
         direction *= -1;
         moveDown = true;
+    }
+
+    public void UpgradeSpeed()
+    {
         moveInterval -= 0.025f;
 
         if (moveInterval < 0.1f)
