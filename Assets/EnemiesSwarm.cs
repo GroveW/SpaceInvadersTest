@@ -11,6 +11,9 @@ public class EnemiesSwarm : MonoBehaviour
     private float moveInterval = 1.0f;
     private float moveStamp = 0.0f;
 
+    [SerializeField]
+    private float minimalInterval = 0.05f;
+
     private int direction = -1;
     private bool moveDown = false;
 
@@ -62,8 +65,8 @@ public class EnemiesSwarm : MonoBehaviour
     {
         moveInterval -= 0.025f;
 
-        if (moveInterval < 0.1f)
-            moveInterval = 0.1f;
+        if (moveInterval < minimalInterval)
+            moveInterval = minimalInterval;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

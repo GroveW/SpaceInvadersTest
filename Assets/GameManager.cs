@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -59,5 +60,10 @@ public class GameManager : MonoBehaviour
     public void AddPoint()
     {
         Score += 1;
+    }
+
+    public void TakePoints()
+    {
+        Score -= 2;
     }
 }
