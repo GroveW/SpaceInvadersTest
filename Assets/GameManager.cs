@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
 
     private bool boostEnabled = false;
     private bool boostActive = false;
-    private float boostCooldown = 10.0f;
+    private float boostCooldown = 40.0f;
     private float boostCooldownRemain;
 
     private int Score
