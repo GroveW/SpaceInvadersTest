@@ -18,23 +18,26 @@ public class EnemiesSwarm : MonoBehaviour
     private bool moveDown = false;
 
     [SerializeField]
-    private int enemiesColumns = 8;
-
-    [SerializeField]
-    private int enemiesRows = 4;
-
-    [SerializeField]
     private GameObject rammingEnemy;
+
+    [SerializeField]
+    private GameObject shootingEnemy;
 
     void Start()
     {
         float distanceBetween = 0.5f;
 
+        int enemiesRows = GameManager.Instance.EnemiesRows;
+        int enemiesColumns = GameManager.Instance.EnemiesColumns;
+
+        GameObject enemyType;
+
         for (int r = 0; r < enemiesRows; r++)
         {
+            enemyType = Random.Range(0, 2) == 0 ? rammingEnemy : shootingEnemy;
             for (int c = 0; c < enemiesColumns; c++)
             {
-                Instantiate(rammingEnemy, new Vector3(c * distanceBetween - 1.5f, -r * distanceBetween + 3.0f, transform.position.z), Quaternion.identity, transform);
+                Instantiate(enemyType, new Vector3(c * distanceBetween - 1.5f, -r * distanceBetween + 3.0f, transform.position.z), Quaternion.identity, transform).GetComponent<Enemy>().SetColRow(c, r);
             }
         }
     }
@@ -63,7 +66,7 @@ public class EnemiesSwarm : MonoBehaviour
 
     public void UpgradeSpeed()
     {
-        moveInterval -= 0.025f;
+        moveInterval -= 0.03f;
 
         if (moveInterval < minimalInterval)
             moveInterval = minimalInterval;

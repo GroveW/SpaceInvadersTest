@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class RammingEnemy : Enemy
 {
-
+    public override void Upgrade() { }
 }
