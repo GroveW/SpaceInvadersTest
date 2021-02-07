@@ -57,6 +57,14 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Text rankingText;
 
+    [SerializeField]
+    private Text boostButtonText;
+
+    private bool boostEnabled = false;
+    private bool boostActive = false;
+    private float boostCooldown = 10.0f;
+    private float boostCooldownRemain;
+
     private int Score
     {
         get => score;
@@ -68,8 +76,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private Player player;
+
     void Start()
     {
+        player = GameObject.Find("Player").GetComponent<Player>();
+
+        boostCooldownRemain = boostCooldown;
         ufosInColumn = new int[enemiesColumns];
 
         for (int i = 0; i < ufosInColumn.Length; i++)
@@ -85,6 +98,30 @@ public class GameManager : MonoBehaviour
         float boardHeight = 1.0f - buttonsAndTextAreaRatio;
 
         board.transform.localScale = new Vector3(4.7f, height * boardHeight, board.transform.localScale.z);
+
+        StartCoroutine(LoadBoost());
+    }
+
+    private IEnumerator LoadBoost()
+    {
+        while(true)
+        {
+            if (!boostEnabled)
+            {
+                boostButtonText.text = boostCooldownRemain + "s";
+                boostCooldownRemain--;
+
+                yield return new WaitForSecondsRealtime(1);
+
+                if (boostCooldownRemain == 0)
+                {
+                    boostButtonText.text = "BOOST";
+                    boostEnabled = true;
+                }
+            }
+            else
+                yield return null;
+        }
     }
 
     public void AddPointAndReduceColumn(int column)
@@ -111,7 +148,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        GameObject.Find("Player").GetComponent<Player>().GameEnded();
+        player.GameEnded();
         endScoreText.text = "Score: " + score + "pts";
 
         int rankingPlace = 1;
@@ -141,5 +178,22 @@ public class GameManager : MonoBehaviour
     public void GoToMenu()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void BoostAttack()
+    {
+        if (boostEnabled && !boostActive)
+        {
+            boostActive = true;
+            boostButtonText.text = "...";
+            player.StartBoost();
+        }
+    }
+
+    public void DisableBoost()
+    {
+        boostEnabled = false;
+        boostActive = false;
+        boostCooldownRemain = boostCooldown;
     }
 }

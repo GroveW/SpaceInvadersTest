@@ -23,6 +23,9 @@ public class Player : MonoBehaviour
 
     private bool isGameEnded = false;
 
+    [SerializeField]
+    private int boostDuration = 5;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -76,5 +79,18 @@ public class Player : MonoBehaviour
     public void GameEnded()
     {
         isGameEnded = true;
+    }
+
+    public void StartBoost()
+    {
+        fireInterval /= 2.0f;
+        StartCoroutine(HandleBoost());
+    }
+
+    private IEnumerator HandleBoost()
+    {
+        yield return new WaitForSecondsRealtime(boostDuration);
+        fireInterval *= 2.0f;
+        GameManager.Instance.DisableBoost();
     }
 }
