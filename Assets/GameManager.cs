@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -46,6 +47,15 @@ public class GameManager : MonoBehaviour
     private Text scoreText;
 
     private int score;
+
+    [SerializeField]
+    private GameObject gameOverPanel;
+
+    [SerializeField]
+    private Text endScoreText;
+
+    [SerializeField]
+    private Text rankingText;
 
     private int Score
     {
@@ -97,5 +107,39 @@ public class GameManager : MonoBehaviour
     public void TakePoint()
     {
         Score -= 1;
+    }
+
+    public void GameOver()
+    {
+        GameObject.Find("Player").GetComponent<Player>().GameEnded();
+        endScoreText.text = "Score: " + score + "pts";
+
+        int rankingPlace = 1;
+
+        while (PlayerPrefs.GetInt(rankingPlace + "score") >= score)
+        {
+            rankingPlace++;
+            if (rankingPlace > 10)
+                break;
+        }
+
+        if (rankingPlace <= 10)
+        {
+            for (int i = 10; i > rankingPlace; i--)
+            {
+                PlayerPrefs.SetInt(i + "score", PlayerPrefs.GetInt(i - 1 + "score"));
+            }
+
+            PlayerPrefs.SetInt(rankingPlace + "score", score);
+            rankingText.text = "You ranked: " + rankingPlace;
+        }
+
+
+        gameOverPanel.SetActive(true);
+    }
+
+    public void GoToMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

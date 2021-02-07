@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float bulletSpeed = 2.0f;
 
+    private bool isGameEnded = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -28,6 +30,9 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (isGameEnded)
+            return;
+
         Fire();
     }
 
@@ -43,6 +48,9 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (isGameEnded)
+            return;
+
         Move();
     }
 
@@ -63,5 +71,10 @@ public class Player : MonoBehaviour
             GameManager.Instance.TakePoint();
             Destroy(collision.gameObject);
         }
+    }
+
+    public void GameEnded()
+    {
+        isGameEnded = true;
     }
 }

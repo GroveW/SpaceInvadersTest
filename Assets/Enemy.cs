@@ -11,13 +11,19 @@ public abstract class Enemy : MonoBehaviour
 
     public int Column { get => column; }
 
+    private static int enemiesLeft;
+
     protected static int[] activeRow;
     private static int[,] deadUfos;
 
     protected void Start()
     {
-        activeRow = new int[GameManager.Instance.EnemiesColumns];
-        deadUfos = new int[GameManager.Instance.EnemiesColumns, GameManager.Instance.EnemiesRows];
+        int columns = GameManager.Instance.EnemiesColumns;
+        int rows = GameManager.Instance.EnemiesRows;
+
+        enemiesLeft = columns * rows;
+        activeRow = new int[columns];
+        deadUfos = new int[columns, rows];
 
         for (int i = 0; i < activeRow.Length; i++)
         {
@@ -56,6 +62,13 @@ public abstract class Enemy : MonoBehaviour
         }
 
         deadUfos[column, row] = 1;
+        enemiesLeft--;
+
+        if (enemiesLeft == 0)
+        {
+            GameManager.Instance.GameOver();
+        }
+
         Destroy(gameObject);
     }
 
